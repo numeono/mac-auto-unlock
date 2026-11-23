@@ -1,6 +1,6 @@
 # Setup and recovery
 
-Start with `mac-session status`. Keep a way to unlock and operate the Mac yourself. This beta cannot replace initial login after a reboot.
+Start with `mac-session status`. After a reboot, the LaunchAgent starts when macOS establishes the user's graphical login session. If the Mac is waiting for the first login, complete it before requesting a helper unlock.
 
 | Symptom | Next step |
 | --- | --- |

@@ -1,16 +1,16 @@
 # Mac Session Helper
 
-<img src="assets/AppIcon.png" width="112" alt="Mac Session Helper icon">
+<img src="assets/AppIcon-v2.png" width="112" alt="A Mac mini and display with an open padlock and terminal prompt">
 
 Mac Session Helper is built primarily for **headless Mac mini setups** that run desktop automation. It gives a local automation temporary access to an already logged-in macOS desktop, then relocks a desktop it unlocked when the last task lease ends. A lease lasts 30 to 900 seconds. The helper stores the login password in the local login Keychain and checks the secure Apple loginwindow target before typing it.
 
-For example, an agent on a Mac mini can request desktop access, use a native app, and release access when finished. Shell jobs that do not need the desktop should run while it stays locked. The helper provides session access; it does not provide remote desktop viewing or control.
+When Codex needs a native app, it can request a lease, do the desktop work, and release the lease when it finishes. Shell jobs can run while the screen stays locked. Use your existing computer-use tools to interact with the desktop after unlocking.
 
 **Beta. Version 1.0.6 is still experimental and not ready for unattended reliance.** Real lock/unlock/relock and sleeping-display unlock tests have passed on the development Mac mini. Wake failures remain intermittent. A later successful unlock also lost its task lease before cleanup and needed an explicit lock. See the [validation record](docs/VALIDATION.md) for dated results and [the audit](docs/SECURITY-AUDIT.md) for remaining release gates.
 
 ## Boundaries
 
-- Initial login after shutdown or restart is manual. This is not a FileVault unlock service.
+- The helper needs an authenticated console session. It cannot perform the first login after shutdown or restart, including FileVault unlock.
 - No automatic login, system daemon, network listener, telemetry or updater is installed.
 - The CLI never accepts or returns a password. Enrollment happens in the app's secure field.
 - A failed password attempt blocks further attempts until successful local enrollment. Never delete the latch to retry.
@@ -20,11 +20,11 @@ Read [SECURITY.md](SECURITY.md) before using the helper. Focus checks and synthe
 
 ## Headless setup requirements
 
-Headless means normal operation without a directly attached keyboard or monitor. It does not mean the Mac can boot into an unattended authenticated session. You must complete the initial login after every shutdown or restart. Arrange a way to reach the Mac for that login and for permission or credential recovery before relying on remote automation.
+Headless setups can run without a directly attached keyboard or monitor. After a restart, the helper resumes when macOS has an authenticated console session for the account. Complete the first login yourself if macOS is waiting at the login screen. Arrange a way to reach the Mac for that login and for permission or credential recovery before relying on remote automation.
 
 The helper runs in the account's existing graphical session through an Aqua LaunchAgent. An SSH connection alone does not create that session. The desktop must remain available to macOS, and the helper must be able to wake it and verify the login field. Operation with every monitor, display adapter and remote-access configuration has not been verified.
 
-The app declares macOS 14.0 as its minimum. Live testing so far covers an Apple Silicon Mac mini on macOS 27.2, not a compatibility matrix. Intel Macs and other macOS versions are unverified. FileVault and manual initial login stay enabled.
+The app declares macOS 14.0 as its minimum. Live testing covers one Apple Silicon Mac mini on macOS 27.2 and 27.2.1. The installed helper unlocked and relocked the desktop after the 27.2.1 update and restart, once a console session already existed. See the [validation record](docs/VALIDATION.md).
 
 ## Build and install
 
@@ -82,7 +82,7 @@ The helper also has a 15-minute idle lock. It leaves native energy and password-
 
 `Tests/runtime_protocol.py` checks only malformed requests and status against an installed helper; it never requests unlocking. `Tests/protocol_test.py` is an older pre-enrollment test and refuses to run after enrollment.
 
-Full release verification must also cover real awake and display-asleep unlocks, concurrent leases, expiry, manual lock revocation, crash recovery, local setup failures and account/session changes. Cold boot remains manual.
+Full release verification must also cover real awake and display-asleep unlocks, concurrent leases, expiry, manual lock revocation, crash recovery, local setup failures and account/session changes.
 
 ## Removal and recovery
 

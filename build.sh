@@ -3,7 +3,7 @@ set -eu
 cd "${0:A:h}"
 bundle="$PWD/build/Mac Session Helper.app"
 mkdir -p "$bundle/Contents/MacOS" "$bundle/Contents/Resources"
-cp assets/AppIcon.icns "$bundle/Contents/Resources/AppIcon.icns"
+cp assets/AppIcon-v2.icns "$bundle/Contents/Resources/AppIcon.icns"
 cat > "$bundle/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

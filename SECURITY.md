@@ -20,7 +20,7 @@ A persistent latch is written before input. An unsuccessful attempt leaves it se
 
 Leases are bounded and the helper relocks after the final lease it owns ends. A timer handles idle/expired leases, including modal setup. Bounded waits process system events and reject reentrant mutations during unlock. A hung OS service or a stopped helper can still delay enforcement; an independently enforcing watchdog is not implemented. Do not promise an absolute lock deadline under arbitrary process or OS failure.
 
-FileVault, automatic login and preboot authentication are untouched. Initial login after reboot remains manual. The app is a user Aqua LaunchAgent, not a privileged system service.
+FileVault, automatic login and preboot authentication are untouched. The app starts as a user Aqua LaunchAgent after macOS establishes a graphical login session. It can unlock that session's screen and has no role in establishing the session.
 
 ## Reporting and disclosure
 
