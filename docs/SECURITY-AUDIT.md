@@ -7,7 +7,7 @@ Reviewed November 9, 2026. Scope: Swift helper source, Python client, shell buil
 | ID | Severity | Finding | Treatment and evidence |
 | --- | --- | --- | --- |
 | MSH-01 | High | A bundle name alone did not authenticate the password target. | Candidate now checks the immutable system path and a dynamic Apple signature requirement. Native tests accept actual loginwindow and reject the test process and another Apple app. Real credential unlock and desktop access passed on November 10 and 11. Repeated reliability remains unresolved; see the validation record. |
-| MSH-02 | High | Focus can change between validation and keyboard delivery. | Checks remain before each input stage. This race cannot be removed by more polling. Residual architectural risk; independent review required before public release. |
+| MSH-02 | High | Focus can change between validation and keyboard delivery. | Checks run before each input stage. This race cannot be removed by more polling. Independent review remains open. |
 | MSH-03 | Medium | Slowly supplied socket input could monopolize the single command worker. | Candidate uses a total read deadline, bounded framing and send timeout. Parser rejects unexpected fields, malformed types and unbounded leases. Installed-helper malformed request tests passed; a drip-fed client closed in 3.3 seconds and status remained responsive. |
 | MSH-04 | Medium | Setup modal bypassed lease expiry and idle enforcement; ending a lease was rejected during setup. | Candidate schedules watchdog in modal/tracking/default modes, closes idle modal before relock and accepts lease release during setup. Real timed modal/expiry test pending. |
 | MSH-05 | Medium | Synthetic wake and blocking waits were unreliable with a sleeping display. | Explicit Apple power request, awake settling, event-loop waits, reentrancy guards and a password-free wake-check command added. Original 1.0.5 real helper still timed out despite standalone tests passing. Candidate passed two real helper wake-only checks from an observed sleeping display. Subsequent credential unlocks passed, but a November 10 repeat still failed at display wake before input. See the validation record. |
@@ -31,15 +31,14 @@ Passed before the candidate: v1.0.5 real lock/unlock/relock, but its display-asl
 
 Candidate checks: compilation/signature, session and lease policy, focus/display readiness, request schema/framing, nested-modal dispatch, Apple loginwindow identity. See CI for portable checks. Local runtime and UI outcomes are recorded below after execution; no unperformed check counts as passed.
 
-## Public release gates
+## Open work after the alpha
 
 1. Verify the exact release build on real awake and sleeping desktops, with repeated cycles, simultaneous leases, lease expiry, manual lock, helper crash/restart, modal setup and account switching. Preserve manual FileVault login.
 2. Resolve or explicitly accept the focus/event-delivery race and enforcement-under-stall limitation after independent security review.
 3. Establish stable signing/notarization and a safe upgrade/migration workflow; stop requiring unexplained repeated re-enrollment.
-4. Select an open-source license after provenance review, including dependencies and generated assets. No upstream license or source reuse rights are assumed from a public GitHub page.
-5. Set a private vulnerability-reporting channel, supported-version policy and reproducible release checks. Complete a final secret/privacy scan of the exact public tree and history.
+4. Document supported versions and reproducible checks for any packaged release.
 
-Until those gates are satisfied, keep the repository private and do not publish a release or describe the app as security-certified.
+The public alpha is source code under the MIT license. Users should treat the issues above as open and use the helper at their own risk.
 
 ## Local candidate outcomes
 
@@ -49,4 +48,4 @@ The initial staged tree was checked for private-key/token patterns, personal mac
 
 ## Follow-up through November 11, 2026
 
-See [the validation record](VALIDATION.md) for successful real unlocks and their limits. Display wake remains intermittent. On November 11, a successful unlock and Finder screenshot were followed by a missing-lease error during cleanup. Status showed an unlocked desktop and zero active tasks; explicit locking succeeded. The cause is unconfirmed. Investigate lease loss before claiming reliable unattended cleanup. No public-release gate is waived by these successful individual unlocks.
+See [the validation record](VALIDATION.md) for successful real unlocks and their limits. Display wake has failed intermittently. On November 11, a successful unlock and Finder screenshot were followed by a missing-lease error during cleanup. Status showed an unlocked desktop and zero active tasks. An explicit lock succeeded. The cause is unconfirmed. Reliable unattended cleanup still needs verification.

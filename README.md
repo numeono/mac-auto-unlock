@@ -1,12 +1,18 @@
 # Mac Session Helper
 
-<img src="assets/AppIcon-v2.png" width="112" alt="A Mac mini and display with an open padlock and terminal prompt">
+<img src="assets/AppIcon.png" width="112" alt="Mac Session Helper icon">
 
 Mac Session Helper is built primarily for **headless Mac mini setups** that run desktop automation. It gives a local automation temporary access to an already logged-in macOS desktop, then relocks a desktop it unlocked when the last task lease ends. A lease lasts 30 to 900 seconds. The helper stores the login password in the local login Keychain and checks the secure Apple loginwindow target before typing it.
 
 When Codex needs a native app, it can request a lease, do the desktop work, and release the lease when it finishes. Shell jobs can run while the screen stays locked. Use your existing computer-use tools to interact with the desktop after unlocking.
 
-**Beta. Version 1.0.6 is still experimental and not ready for unattended reliance.** Real lock/unlock/relock and sleeping-display unlock tests have passed on the development Mac mini. Wake failures remain intermittent. A later successful unlock also lost its task lease before cleanup and needed an explicit lock. See the [validation record](docs/VALIDATION.md) for dated results and [the audit](docs/SECURITY-AUDIT.md) for remaining release gates.
+**Alpha, v1.0.6. Use at your own risk.** Keep a way to reach the Mac and lock or unlock it yourself. Review the known limitations before enrolling your login password.
+
+- The helper stores the login password in the local Keychain. Processes running as your user can request an unlock, and focus can change between the helper's final check and simulated keyboard input.
+- Display wake has failed intermittently. In one test, a task lost its lease and the desktop stayed unlocked until an explicit lock. Check the locked state after each task.
+- Live testing covers one Apple Silicon Mac mini. Unattended operation, other hardware and independent security review are still pending.
+
+See the [validation record](docs/VALIDATION.md) for test results and the [security review](docs/SECURITY-AUDIT.md) for open risks.
 
 ## Boundaries
 
@@ -28,7 +34,7 @@ The app declares macOS 14.0 as its minimum. Live testing covers one Apple Silico
 
 ## Build and install
 
-You need Git, Xcode Command Line Tools with the macOS SDK and Swift compiler, and Python 3. The installer also uses `/usr/bin/python3`. There is no packaged or notarized download. While the repository is private, cloning requires access granted by the owner.
+Build this alpha from source. You need Git, Xcode Command Line Tools with the macOS SDK and Swift compiler, and Python 3. The installer uses `/usr/bin/python3`.
 
 Run as the logged-in user, without sudo:
 
@@ -100,8 +106,8 @@ If desired, remove only the `Mac Session Helper (local session only)` item in Ke
 
 The approach was informed by [BLEUnlock](https://github.com/ts1/BLEUnlock), but this is a separate implementation with task leases and additional target checks. No upstream source file is vendored. It uses Apple's private lock API and deprecated Keychain ACL APIs, so compatibility is not guaranteed across macOS versions.
 
-The icon was generated with OpenAI's image tool; its prompt is in [assets/PROVENANCE.md](assets/PROVENANCE.md). No open-source license has been selected yet. Keep this repository private until licensing, audit follow-up and the live validation gates are complete. No public release assets have been published.
+The project is available under the [MIT license](LICENSE). See the [icon provenance](assets/PROVENANCE.md) for the generation prompt. Developer ID signing, notarization and release packaging are still pending.
 
 ## Contributions and bug reports
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks and the details to include in a bug report. The repository is currently private and has no open-source license. These instructions are for authorized testers; public distribution is still pending.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks and bug reports. For security findings, follow [SECURITY.md](SECURITY.md).

@@ -1,4 +1,4 @@
-# Beta validation record
+# Alpha validation record
 
 This is a summary of observed development-machine results, not a supported-hardware matrix or an independent security audit. The current version is 1.0.6. Raw machine diagnostics and screenshots stay outside the repository.
 
@@ -30,6 +30,6 @@ On November 22, the existing v1.0.6 installation unlocked the locked desktop for
 - The cause of the November 11 missing-lease result.
 - Full 1.0.6 coverage of concurrent tasks, lease expiry, manual lock revocation, modal setup expiry, helper crash/restart and account switching.
 - Other Mac models, Intel hardware and macOS versions outside 27.2 and 27.2.1.
-- Remaining security, signing, licensing and public-release gates in the [audit](SECURITY-AUDIT.md).
+- Independent security review, signing and release packaging. See the [security review](SECURITY-AUDIT.md).
 
 The helper requires an existing graphical login session, including after a cold boot or restart.

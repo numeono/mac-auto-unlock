@@ -1,6 +1,6 @@
 # Contributing
 
-Mac Session Helper is a private beta for authorized testers. No open-source license has been selected. Access to this repository does not grant permission to redistribute it.
+Mac Session Helper is an experimental alpha under the [MIT license](LICENSE).
 
 ## Development checks
 
@@ -21,6 +21,6 @@ For behavior changes, add a focused regression test where possible and describe 
 
 ## Reporting a problem
 
-Use a private repository issue for ordinary bugs. Include sanitized reproduction steps, expected and observed behavior, version and display setup. See [troubleshooting](docs/TROUBLESHOOTING.md) for useful diagnostics. Follow [SECURITY.md](SECURITY.md) for security findings.
+Open a GitHub issue for ordinary bugs. Include sanitized reproduction steps, expected and observed behavior, version and display setup. See [troubleshooting](docs/TROUBLESHOOTING.md) for useful diagnostics. Follow [SECURITY.md](SECURITY.md) for security findings.
 
-Before committing, review `git diff --cached`. Never stage runtime data, credentials, signing keys, local artifacts or screenshots containing personal information. Keep generated builds and machine-specific files out of Git. Public release remains gated by the audit checklist.
+Before committing, review `git diff --cached`. Never stage runtime data, credentials, signing keys, local artifacts or screenshots containing personal information. Keep generated builds and machine-specific files out of Git.

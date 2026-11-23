@@ -24,6 +24,6 @@ FileVault, automatic login and preboot authentication are untouched. The app sta
 
 ## Reporting and disclosure
 
-While the repository is private, report findings to its owner through a private issue. Include the version, macOS version and sanitized reproduction steps. Never include passwords, secret exports or raw memory dumps. A public reporting channel and disclosure policy must be established before publication.
+Report security findings privately through [GitHub Security Advisories](https://github.com/numeono/mac-session-helper/security/advisories). Include the helper version, macOS version and sanitized reproduction steps. Keep exploit details out of public issues. Never include passwords, secret exports or raw memory dumps.
 
 The [audit report](docs/SECURITY-AUDIT.md) describes the review scope, known risks and outstanding validation. It is an implementation review by the development assistant, not an independent penetration test or security certification.
