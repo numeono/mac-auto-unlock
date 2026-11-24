@@ -1,6 +1,6 @@
 # Mac Session Helper
 
-<img src="assets/AppIcon.png" width="112" alt="Mac Session Helper icon">
+<img src="assets/AppIcon.png" width="112" alt="A display with an open padlock and a compact silver desktop">
 
 Mac Session Helper is built primarily for **headless Mac mini setups** that run desktop automation. It gives a local automation temporary access to an already logged-in macOS desktop, then relocks a desktop it unlocked when the last task lease ends. A lease lasts 30 to 900 seconds. The helper stores the login password in the local login Keychain and checks the secure Apple loginwindow target before typing it.
 
@@ -106,7 +106,7 @@ If desired, remove only the `Mac Session Helper (local session only)` item in Ke
 
 The approach was informed by [BLEUnlock](https://github.com/ts1/BLEUnlock), but this is a separate implementation with task leases and additional target checks. No upstream source file is vendored. It uses Apple's private lock API and deprecated Keychain ACL APIs, so compatibility is not guaranteed across macOS versions.
 
-The project is available under the [MIT license](LICENSE). See the [icon provenance](assets/PROVENANCE.md) for the generation prompt. Developer ID signing, notarization and release packaging are still pending.
+The project is available under the [MIT license](LICENSE). The app uses [original icon artwork](assets/PROVENANCE.md). Developer ID signing, notarization and release packaging are still pending.
 
 ## Contributions and bug reports
 
