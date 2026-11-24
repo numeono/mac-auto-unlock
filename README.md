@@ -2,9 +2,9 @@
 
 <img src="assets/AppIcon.png" width="112" alt="A display with an open padlock and a compact silver desktop">
 
-Mac Session Helper is built primarily for **headless Mac mini setups** that run desktop automation. It gives a local automation temporary access to an already logged-in macOS desktop, then relocks a desktop it unlocked when the last task lease ends. A lease lasts 30 to 900 seconds. The helper stores the login password in the local login Keychain and checks the secure Apple loginwindow target before typing it.
+Mac Session Helper unlocks the screen on your Mac mini so Codex can use desktop apps. When the last desktop task releases access, the helper locks the screen again.
 
-When Codex needs a native app, it can request a lease, do the desktop work, and release the lease when it finishes. Shell jobs can run while the screen stays locked. Use your existing computer-use tools to interact with the desktop after unlocking.
+You handle the first sign-in after a restart. Then you can leave the screen locked between tasks, even on a Mac mini without an attached keyboard or monitor.
 
 **Alpha, v1.0.6. Use at your own risk.** Keep a way to reach the Mac and lock or unlock it yourself. Review the known limitations before enrolling your login password.
 
@@ -65,6 +65,8 @@ A build passing unit tests is not proof of successful desktop unlocking. See [tr
 
 ## Task use
 
+Use your usual computer-use tools after `mac-session begin` succeeds. Shell-only tasks can run with the screen locked.
+
 ```sh
 mac-session status
 mac-session begin --seconds 900
@@ -74,7 +76,7 @@ mac-session end LEASE_FROM_BEGIN
 
 Each command returns JSON and exits nonzero on failure. Check `ok` before continuing. In a successful `begin` response, `unlocked` means the desktop was locked when the request began; it is false when the desktop was already unlocked. Save the returned lease. Renew only while actively working and end before waiting for a user or finishing.
 
-Each concurrent task needs its own lease. Ending the last lease locks only a desktop the helper unlocked. A manual lock revokes leases; renewal cannot unlock again.
+Each concurrent task needs its own lease, which lasts 30 to 900 seconds. Ending the last lease locks only a desktop the helper unlocked. A manual lock revokes leases; renewal cannot unlock again.
 
 Put lease release in your task's cleanup path and read `status` afterward. When the helper unlocked the desktop and no other task remains, verify `locked=true` and `active_tasks=0`. A missing-lease error does not prove that the desktop is locked. See [troubleshooting](docs/TROUBLESHOOTING.md) for recovery without interrupting other work.
 
