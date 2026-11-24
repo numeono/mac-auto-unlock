@@ -6,7 +6,7 @@ Mac Session Helper stores a usable login password in the local login Keychain so
 
 The account owner, macOS, the installed helper, its signing identity and every process already running as that user are within the trust boundary. The Unix socket and runtime directory exclude other ordinary users through filesystem permissions and peer-UID verification. Same-user code and root can request unlocks or tamper with this environment. There is no per-client application allowlist.
 
-The helper requires an eligible already-logged-in console session. Before password input it checks the system loginwindow executable path, Apple's code signature, secure-field role, focus and display state. It never intentionally types into a generic window or unverified target. Focus and event delivery remain separate operations; a check cannot eliminate every race.
+The helper runs in the active desktop session for its account. Before password input it checks the system loginwindow executable path, Apple's code signature, secure-field role, focus and display state. It never intentionally types into a generic window or unverified target. Focus and event delivery remain separate operations; a check cannot eliminate every race.
 
 ## Credential handling
 
@@ -20,7 +20,7 @@ A persistent latch is written before input. An unsuccessful attempt leaves it se
 
 Leases are bounded and the helper relocks after the final lease it owns ends. A timer handles idle/expired leases, including modal setup. Bounded waits process system events and reject reentrant mutations during unlock. A hung OS service or a stopped helper can still delay enforcement; an independently enforcing watchdog is not implemented. Do not promise an absolute lock deadline under arbitrary process or OS failure.
 
-FileVault, automatic login and preboot authentication are untouched. The app starts as a user Aqua LaunchAgent after macOS establishes a graphical login session. It can unlock that session's screen and has no role in establishing the session.
+macOS handles FileVault and account sign-in. The helper starts as a user Aqua LaunchAgent when macOS starts the desktop session, including after a reboot. It unlocks that session's screen.
 
 ## Reporting and disclosure
 

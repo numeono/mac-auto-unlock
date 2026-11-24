@@ -22,7 +22,7 @@ Cleanup then returned `Lease is missing or expired`. Status showed zero active t
 
 The Mac mini installed macOS 27.2.1 and restarted on November 19. The console login record shows an active user session beginning about a minute after boot. The record alone does not identify how the first login was completed.
 
-On November 22, the existing v1.0.6 installation unlocked the locked desktop for Safari work, including a start with the display asleep. On lease release, the helper reported a locked screen, zero active tasks and no failed-attempt latch. This verifies screen unlock and relock after an OS update and restart with an authenticated session already present.
+On November 22, the existing v1.0.6 installation unlocked the screen for Safari work, including a start with the display asleep. When the task released its lease, the helper reported a locked screen, zero active tasks and no failed-attempt latch. This verifies screen unlock and relock after the OS update and restart.
 
 ## Still unverified or unresolved
 
@@ -31,5 +31,3 @@ On November 22, the existing v1.0.6 installation unlocked the locked desktop for
 - Full 1.0.6 coverage of concurrent tasks, lease expiry, manual lock revocation, modal setup expiry, helper crash/restart and account switching.
 - Other Mac models, Intel hardware and macOS versions outside 27.2 and 27.2.1.
 - Independent security review, signing and release packaging. See the [security review](SECURITY-AUDIT.md).
-
-The helper requires an existing graphical login session, including after a cold boot or restart.

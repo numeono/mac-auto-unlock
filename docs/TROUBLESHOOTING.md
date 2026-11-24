@@ -1,6 +1,6 @@
 # Setup and recovery
 
-Start with `mac-session status`. After a reboot, the LaunchAgent starts when macOS establishes the user's graphical login session. If the Mac is waiting for the first login, complete it before requesting a helper unlock.
+Start with `mac-session status`. After a reboot, the helper resumes when macOS brings back your desktop session. If macOS pauses at FileVault or asks you to sign in, complete that step first.
 
 | Symptom | Next step |
 | --- | --- |

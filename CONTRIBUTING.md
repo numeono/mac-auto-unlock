@@ -17,7 +17,7 @@ Building creates a local bundle under `build/`; it does not replace the installe
 
 Use `zsh test.sh --live-display` only on a machine where you can safely sleep the display. Real credential tests require local enrollment and a recovery path. Do not run display or locking tests during another person's desktop work.
 
-For behavior changes, add a focused regression test where possible and describe the actual live checks performed. Keep failed and unperformed cases explicit. Preserve the failed-attempt latch, secure-target checks, manual initial login and per-task leases.
+For behavior changes, add a focused regression test where possible and describe the actual live checks performed. Keep failed and unperformed cases explicit. Preserve the failed-attempt latch, desktop session checks, secure-target checks and per-task leases.
 
 ## Reporting a problem
 

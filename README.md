@@ -4,7 +4,7 @@
 
 Mac Session Helper unlocks the screen on your Mac mini so Codex can use desktop apps. When the last desktop task releases access, the helper locks the screen again.
 
-You handle the first sign-in after a restart. Then you can leave the screen locked between tasks, even on a Mac mini without an attached keyboard or monitor.
+The helper resumes after a restart or macOS update when your desktop session comes back. You can leave the screen locked between tasks, even on a Mac mini without an attached keyboard or monitor.
 
 **Alpha, v1.0.6. Use at your own risk.** Keep a way to reach the Mac and lock or unlock it yourself. Review the known limitations before enrolling your login password.
 
@@ -16,7 +16,7 @@ See the [validation record](docs/VALIDATION.md) for test results and the [securi
 
 ## Boundaries
 
-- The helper needs an authenticated console session. It cannot perform the first login after shutdown or restart, including FileVault unlock.
+- If macOS pauses at FileVault or asks you to sign in, complete that step to start the desktop session.
 - No automatic login, system daemon, network listener, telemetry or updater is installed.
 - The CLI never accepts or returns a password. Enrollment happens in the app's secure field.
 - A failed password attempt blocks further attempts until successful local enrollment. Never delete the latch to retry.
@@ -26,11 +26,11 @@ Read [SECURITY.md](SECURITY.md) before using the helper. Focus checks and synthe
 
 ## Headless setup requirements
 
-Headless setups can run without a directly attached keyboard or monitor. After a restart, the helper resumes when macOS has an authenticated console session for the account. Complete the first login yourself if macOS is waiting at the login screen. Arrange a way to reach the Mac for that login and for permission or credential recovery before relying on remote automation.
+On a headless Mac, keep a way to reach the desktop if macOS stops at a startup prompt or you need to restore permissions or update the password.
 
-The helper runs in the account's existing graphical session through an Aqua LaunchAgent. An SSH connection alone does not create that session. The desktop must remain available to macOS, and the helper must be able to wake it and verify the login field. Operation with every monitor, display adapter and remote-access configuration has not been verified.
+An Aqua LaunchAgent starts the helper when macOS starts the account's desktop session. An SSH connection alone does not create that session. The helper needs to be able to wake the display and verify the password field. Operation with every monitor, display adapter and remote-access configuration has not been verified.
 
-The app declares macOS 14.0 as its minimum. Live testing covers one Apple Silicon Mac mini on macOS 27.2 and 27.2.1. The installed helper unlocked and relocked the desktop after the 27.2.1 update and restart, once a console session already existed. See the [validation record](docs/VALIDATION.md).
+The app declares macOS 14.0 as its minimum. Live testing covers one Apple Silicon Mac mini on macOS 27.2 and 27.2.1. The helper unlocked and relocked the desktop after the 27.2.1 update and restart. See the [validation record](docs/VALIDATION.md).
 
 ## Build and install
 
