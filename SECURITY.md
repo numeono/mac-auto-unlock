@@ -1,6 +1,6 @@
 # Security model
 
-Mac Session Helper stores a usable login password in the local login Keychain so a task can unlock an existing desktop session. Accessibility permission allows powerful interaction with that desktop. This is experimental security-sensitive software, not a replacement for macOS authentication or a hardened boundary against the current user.
+Mac Auto Unlock stores a usable login password in the local login Keychain so a task can unlock an existing desktop session. Accessibility permission allows powerful interaction with that desktop. This is experimental security-sensitive software, not a replacement for macOS authentication or a hardened boundary against the current user.
 
 ## Trusted parties
 
@@ -24,6 +24,6 @@ macOS handles FileVault and account sign-in. The helper starts as a user Aqua La
 
 ## Reporting and disclosure
 
-Report security findings privately through [GitHub Security Advisories](https://github.com/numeono/mac-session-helper/security/advisories). Include the helper version, macOS version and sanitized reproduction steps. Keep exploit details out of public issues. Never include passwords, secret exports or raw memory dumps.
+Report security findings privately through [GitHub Security Advisories](https://github.com/numeono/mac-auto-unlock/security/advisories). Include the helper version, macOS version and sanitized reproduction steps. Keep exploit details out of public issues. Never include passwords, secret exports or raw memory dumps.
 
 The [audit report](docs/SECURITY-AUDIT.md) describes the review scope, known risks and outstanding validation. It is an implementation review by the development assistant, not an independent penetration test or security certification.

@@ -1,6 +1,6 @@
 # Contributing
 
-Mac Session Helper is an experimental alpha under the [MIT license](LICENSE).
+Mac Auto Unlock is an experimental alpha under the [MIT license](LICENSE).
 
 ## Development checks
 

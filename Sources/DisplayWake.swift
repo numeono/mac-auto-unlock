@@ -26,7 +26,7 @@ func wakeDisplay(eligible: () -> Bool, report: ([String: Any]) -> Void = { _ in 
     guard eligible() else { return false }
     var assertion: IOPMAssertionID = 0
     let result = IOPMAssertionDeclareUserActivity(
-        "Mac Session Helper requested desktop task" as CFString,
+        "Mac Auto Unlock requested desktop task" as CFString,
         kIOPMUserActiveLocal, &assertion)
     details["assertion_result"] = result
     guard result == kIOReturnSuccess else { details["reason"] = "wake_request_failed"; return false }

@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -eu
 cd "${0:A:h}"
-bundle="$PWD/build/Mac Session Helper.app"
+bundle="$PWD/build/Mac Auto Unlock.app"
 mkdir -p "$bundle/Contents/MacOS" "$bundle/Contents/Resources"
 cp assets/AppIcon.icns "$bundle/Contents/Resources/AppIcon.icns"
 cat > "$bundle/Contents/Info.plist" <<'PLIST'
@@ -9,8 +9,8 @@ cat > "$bundle/Contents/Info.plist" <<'PLIST'
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>CFBundleIdentifier</key><string>local.mads.MacSessionHelper</string>
-<key>CFBundleName</key><string>Mac Session Helper</string>
-<key>CFBundleDisplayName</key><string>Mac Session Helper</string>
+<key>CFBundleName</key><string>Mac Auto Unlock</string>
+<key>CFBundleDisplayName</key><string>Mac Auto Unlock</string>
 <key>CFBundleExecutable</key><string>MacSessionHelper</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>1.0.6</string>

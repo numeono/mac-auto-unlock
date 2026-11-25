@@ -1,8 +1,8 @@
-# Mac Session Helper
+# Mac Auto Unlock
 
 <img src="assets/AppIcon.png" width="112" alt="A display with an open padlock and a compact silver desktop">
 
-Mac Session Helper unlocks the screen on your Mac mini so Codex can use desktop apps. When the last desktop task releases access, the helper locks the screen again.
+Mac Auto Unlock unlocks the screen on your Mac mini so Codex can use desktop apps. When the last desktop task releases access, the helper locks the screen again.
 
 The helper resumes after a restart or macOS update when your desktop session comes back. You can leave the screen locked between tasks, even on a Mac mini without an attached keyboard or monitor.
 
@@ -39,8 +39,8 @@ Build this alpha from source. You need Git, Xcode Command Line Tools with the ma
 Run as the logged-in user, without sudo:
 
 ```sh
-git clone https://github.com/numeono/mac-session-helper.git
-cd mac-session-helper
+git clone https://github.com/numeono/mac-auto-unlock.git
+cd mac-auto-unlock
 zsh test.sh
 zsh install.sh
 export PATH="$HOME/.local/bin:$PATH"
@@ -49,13 +49,13 @@ mac-session status
 
 Add `~/.local/bin` to your shell's PATH if needed, or invoke `~/.local/bin/mac-session` directly. Installation starts the helper for the current graphical session and registers it to start at future logins.
 
-The app installs at `~/Applications/Mac Session Helper.app`, the client at `~/.local/bin/mac-session`, and an Aqua LaunchAgent at `~/Library/LaunchAgents/local.mads.MacSessionHelper.plist`. The legacy bundle identifier remains `local.mads.MacSessionHelper` to preserve existing installations; it is not a credential.
+New installations place the app at `~/Applications/Mac Auto Unlock.app`, the client at `~/.local/bin/mac-session`, and the Aqua LaunchAgent at `~/Library/LaunchAgents/local.mads.MacSessionHelper.plist`. The installer reuses `~/Applications/Mac Session Helper.app` when upgrading an existing installation at that path.
 
 The default build is ad-hoc signed. A rebuild may require removing and re-adding the installed app in Privacy & Security → Device Control and Data Access, plus local password enrollment. On older macOS versions this permission is named Accessibility. For development with an existing code-signing identity, set `SIGNING_IDENTITY` when building. No signing certificate or private key is bundled.
 
 For first-time setup:
 
-1. Open `~/Applications/Mac Session Helper.app`. Grant that exact installed app Device Control and Data Access, or Accessibility on older macOS versions.
+1. Open the installed app in `~/Applications`. Grant that exact app Device Control and Data Access, or Accessibility on older macOS versions.
 2. Choose Password setup in its status window. Enter the Mac login password locally and dismiss the success message. Never put the password in a command, script, issue or agent conversation.
 3. Check `mac-session status`. Confirm `accessibility`, `credential_saved`, `eligible_session` and `enabled` are true, and `attempt_blocked` is false. `credential_saved` only proves that an entry exists; it does not prove the current app can read it.
 4. While unlocked and with no other desktop tasks, run `mac-session test-cycle`. This deliberately locks, unlocks and relocks the desktop. Have a recovery path ready.

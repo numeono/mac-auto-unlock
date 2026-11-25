@@ -6,7 +6,7 @@ Start with `mac-session status`. After a reboot, the helper resumes when macOS b
 | --- | --- |
 | Cannot connect to the helper | Confirm the account has completed its graphical login. Check `launchctl print "gui/$(id -u)/local.mads.MacSessionHelper"`. The installed app and LaunchAgent must belong to that account. |
 | `eligible_session=false` | Return to the intended logged-in console account. SSH access alone is insufficient. Do not bypass the session check. |
-| `accessibility=false` | Grant the exact installed `~/Applications/Mac Session Helper.app` its permission. After a rebuild, an enabled-looking stale entry may need removal and re-addition. Complete any macOS authentication yourself, then check runtime status again. |
+| `accessibility=false` | Grant the app in `~/Applications` its permission. Look for `Mac Auto Unlock.app` on a new installation or `Mac Session Helper.app` on an upgraded installation at the original path. After a rebuild, an enabled-looking stale entry may need removal and re-addition. Complete any macOS authentication yourself, then check runtime status again. |
 | `credential_saved=true`, but the credential cannot be read | Open Password setup locally and enroll again. A saved entry can belong to an older signing identity. Never export or retrieve the password through a script. |
 | `attempt_blocked=true` | Unlock manually and complete successful local Password setup. Do not delete the latch, repeatedly retry the password, or disable target verification. |
 | Display wake fails before password input | Run `mac-session wake-check` to test wake without reading or typing the password. Wake remains intermittent in 1.0.6. If it still fails, recover the desktop manually. Do not build an unlimited retry loop. |

@@ -7,7 +7,12 @@ app_root="$HOME/Applications"
 cli_root="$HOME/.local/bin"
 agent_root="$HOME/Library/LaunchAgents"
 label=local.mads.MacSessionHelper
-target="$app_root/Mac Session Helper.app"
+bundle_name='Mac Auto Unlock.app'
+target="$app_root/$bundle_name"
+legacy_target="$app_root/Mac Session Helper.app"
+if [[ ! -e "$target" && ! -L "$target" && ( -e "$legacy_target" || -L "$legacy_target" ) ]]; then
+    target="$legacy_target"
+fi
 plist="$agent_root/$label.plist"
 if [[ -x "$cli_root/mac-session" ]]; then
     status_json=$("$cli_root/mac-session" status) || status_json='{}'
@@ -21,19 +26,19 @@ for directory in "$app_root" "$cli_root" "$agent_root"; do
 done
 [[ ! -L "$target" && ! -L "$plist" ]] || { print -u2 'Refusing a symlinked installation target.'; exit 1; }
 zsh build.sh
-codesign --verify --strict 'build/Mac Session Helper.app'
+codesign --verify --strict "build/$bundle_name"
 stage=$(mktemp -d "$app_root/.MacSessionHelper.XXXXXXXX")
 trap 'rm -rf "$stage"' EXIT
-ditto 'build/Mac Session Helper.app' "$stage/Mac Session Helper.app"
-codesign --verify --strict "$stage/Mac Session Helper.app"
+ditto "build/$bundle_name" "$stage/$bundle_name"
+codesign --verify --strict "$stage/$bundle_name"
 backup="$HOME/Library/Application Support/MacSessionHelperBackups/$(date +%Y%m%d-%H%M%S)-$$"
 mkdir -p -m 700 "$backup"
-[[ ! -e "$target" ]] || ditto "$target" "$backup/Mac Session Helper.app"
+[[ ! -e "$target" ]] || ditto "$target" "$backup/${target:t}"
 [[ ! -e "$plist" ]] || cp "$plist" "$backup/agent.plist"
 launchctl bootout "gui/$EUID/$label" 2>/dev/null || true
 # Both copies are local; the previous bundle remains available for recovery.
 if [[ -e "$target" ]]; then mv "$target" "$stage/previous.app"; fi
-if ! mv "$stage/Mac Session Helper.app" "$target"; then
+if ! mv "$stage/$bundle_name" "$target"; then
     [[ ! -e "$stage/previous.app" ]] || mv "$stage/previous.app" "$target"
     exit 1
 fi

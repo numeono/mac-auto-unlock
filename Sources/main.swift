@@ -233,7 +233,7 @@ final class Helper: NSObject, NSApplicationDelegate {
 
     func buildMenu() {
         menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        menuItem?.button?.image = NSImage(systemSymbolName: "lock.shield", accessibilityDescription: "Mac Session Helper")
+        menuItem?.button?.image = NSImage(systemSymbolName: "lock.shield", accessibilityDescription: "Mac Auto Unlock")
         let menu = NSMenu()
         for (title, action) in [("Session status…", #selector(showStatus)),
                                 ("Set up / update password…", #selector(setup)),
@@ -251,7 +251,7 @@ final class Helper: NSObject, NSApplicationDelegate {
         if statusWindow == nil {
             let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 460, height: 310),
                                   styleMask: [.titled, .closable, .miniaturizable], backing: .buffered, defer: false)
-            window.title = "Mac Session Helper"
+            window.title = "Mac Auto Unlock"
             window.isReleasedWhenClosed = false
             let title = NSTextField(labelWithString: "Temporary desktop access")
             title.font = .boldSystemFont(ofSize: 21)
@@ -452,8 +452,8 @@ final class Helper: NSObject, NSApplicationDelegate {
         defer { configuring = false }
         NSApp.activate(ignoringOtherApps: true)
         let alert = NSAlert()
-        alert.messageText = "Set up Mac Session Helper"
-        alert.informativeText = "Enter this Mac account's password. It stays in the local login Keychain and is used only when a desktop task explicitly requests an unlock.\n\nThe helper will lock after 15 minutes idle. It cannot unlock FileVault or log in after shutdown. FileVault and automatic login settings stay unchanged."
+        alert.messageText = "Set up Mac Auto Unlock"
+        alert.informativeText = "Enter this Mac account's password. It stays in the local login Keychain and is used only when a desktop task explicitly requests an unlock.\n\nThe helper locks the screen after 15 minutes of idle time. After a restart, it resumes when macOS starts your desktop session. macOS handles FileVault and account sign-in."
         let input = NSSecureTextField(frame: NSRect(x: 0, y: 0, width: 370, height: 25))
         defer { input.stringValue = "" }
         input.placeholderString = "Mac login password"
@@ -486,8 +486,8 @@ final class Helper: NSObject, NSApplicationDelegate {
             let done = NSAlert()
             done.messageText = "Password saved locally"
             done.informativeText = AXIsProcessTrusted()
-                ? "The helper is ready for a lock/unlock test. Cold-boot login remains manual."
-                : "Next, allow Mac Session Helper in System Settings → Privacy & Security → Accessibility. Then return to Codex for the lock/unlock test. Cold-boot login remains manual."
+                ? "The helper is ready for a lock/unlock test."
+                : "Next, allow the installed app in System Settings → Privacy & Security → Accessibility. Then return to Codex for the lock/unlock test."
             done.runModal()
         } catch {
             let e = error as NSError
